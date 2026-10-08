@@ -1,0 +1,21 @@
+name: Daily engagement message
+
+on:
+  schedule:
+    # 14:52 UTC = 5:52 مساءً بتوقيت الكويت (GitHub أحياناً يتأخر كم دقيقة)
+    - cron: "52 14 * * *"
+  workflow_dispatch: {}  # زر تشغيل يدوي للتجربة
+
+jobs:
+  post:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Send message
+        env:
+          DISCORD_WEBHOOK_URL: ${{ secrets.DISCORD_WEBHOOK_URL }}
+          DISCORD_ROLE_ID: ${{ secrets.DISCORD_ROLE_ID }}
+        run: python post_daily.py
