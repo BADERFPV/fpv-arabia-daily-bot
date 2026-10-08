@@ -1,4 +1,4 @@
-name: Daily engagement message
+name: github/workflows/daily.yml
 
 on:
   schedule:
